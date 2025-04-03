@@ -17,7 +17,7 @@ COPY src src
 RUN ./gradlew bootJar --no-daemon
 
 FROM eclipse-temurin:21-jre-alpine
-WORKDIR /app
+WORKDIR /workspace/app
 
 # 보안을 위한 비루트 사용자 추가
 RUN addgroup -S spring && adduser -S spring -G spring
@@ -30,4 +30,4 @@ COPY --from=build /workspace/app/build/libs/*.jar app.jar
 EXPOSE 8080
 
 # 애플리케이션 실행
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
