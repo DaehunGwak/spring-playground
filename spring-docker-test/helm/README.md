@@ -1,9 +1,14 @@
+### commands
+
 ```shell
-helm create spring-docker-test
+# 헬름 차트 생성
+helm create spring-docker-test 
 
-kubectl config current-context # minikube 컨텍스트인지 확인
+# minikube 컨텍스트인지 확인
+kubectl config current-context 
 
-
+# 차트 minkube에 배포
+helm install spring-docker-test-mini spring-docker-test --set image.tag=0.1.1
 ```
 
 ### registries
@@ -12,8 +17,5 @@ kubectl config current-context # minikube 컨텍스트인지 확인
 
 ### trouble-shootings
 - Error: could not find tiller (when `helm install`)
-  - https://stackoverflow.com/questions/59735045/install-helm-2-13-0-on-minikube-server-1-6-2-could-not-find-tiller
-  ```shell
-  kubectl -n kube-system create serviceaccount tiller 
-  
-  ```
+  - helm2 에서 tiller 사용하는데, helm3에서는 사용하지 않음
+  - helm3 버전으로 업데이트 조치 후 해결
