@@ -26,6 +26,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 
     implementation("org.opensearch.client:spring-data-opensearch-starter:1.7.0")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
 
     developmentOnly("org.springframework.boot:spring-boot-devtools")
     developmentOnly("org.springframework.boot:spring-boot-docker-compose")

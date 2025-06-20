@@ -1,14 +1,22 @@
-### OpenSearch Study API 테스트
-### Spring Boot + OpenSearch 연동 API 테스트 모음
+### OpenSearch Study API 테스트 (WebFlux Reactive Edition)
+### Spring Boot + OpenSearch + WebFlux 연동 API 테스트 모음
 
 ### 변수 설정
 @baseUrl = http://localhost:8080
 @contentType = application/json
 
-### 1. 모든 문서 조회 (빈 상태 확인)
+### 🔍 1. 기본 상태 확인 - 문서 개수 조회 (새로운 WebFlux API)
+GET {{baseUrl}}/api/documents/count
+
+### 📄 2. 모든 문서 조회 (Reactive Flux)
 GET {{baseUrl}}/api/documents
 
-### 2. 첫 번째 문서 생성 - Spring Boot와 OpenSearch 연동
+### 🌊 3. 실시간 스트리밍 조회 (Server-Sent Events) - WebFlux 특화 기능
+### 브라우저에서 확인: http://localhost:8080/api/documents/stream
+GET {{baseUrl}}/api/documents/stream
+Accept: text/event-stream
+
+### 📝 4. 단일 문서 생성 - Spring Boot와 OpenSearch 연동
 POST {{baseUrl}}/api/documents
 Content-Type: {{contentType}}
 
@@ -17,55 +25,86 @@ Content-Type: {{contentType}}
   "content": "Spring Boot 애플리케이션에서 OpenSearch를 사용하는 방법에 대한 가이드입니다."
 }
 
-### 3. 두 번째 문서 생성 - Reactive Programming 가이드
+### 📝 5. 단일 문서 생성 - Reactive Programming 가이드
 POST {{baseUrl}}/api/documents
 Content-Type: {{contentType}}
 
 {
-  "title": "Reactive Programming 가이드",
-  "content": "Spring WebFlux를 사용한 리액티브 프로그래밍의 기본 개념과 실무 적용 방법"
+  "title": "WebFlux Reactive Programming 가이드",
+  "content": "Spring WebFlux를 사용한 리액티브 프로그래밍의 기본 개념과 실무 적용 방법. Non-blocking I/O와 backpressure 처리"
 }
 
-### 4. 세 번째 문서 생성 - Kotlin 프로그래밍 입문
-POST {{baseUrl}}/api/documents
+### 🚀 6. 배치 문서 생성 (새로운 WebFlux API) - 병렬 처리
+POST {{baseUrl}}/api/documents/batch
 Content-Type: {{contentType}}
 
-{
-  "title": "Kotlin 프로그래밍 입문",
-  "content": "Kotlin 언어의 기본 문법과 Spring Boot와의 연동 방법을 다룹니다."
-}
+[
+  {
+    "title": "Kotlin 프로그래밍 입문",
+    "content": "Kotlin 언어의 기본 문법과 Spring Boot와의 연동 방법을 다룹니다."
+  },
+  {
+    "title": "OpenSearch 성능 튜닝",
+    "content": "OpenSearch 클러스터의 성능을 최적화하는 방법과 모니터링 기법"
+  },
+  {
+    "title": "Docker와 컨테이너 오케스트레이션",
+    "content": "Docker Compose를 사용한 OpenSearch 클러스터 구성과 운영 가이드"
+  }
+]
 
-### 5. 모든 문서 조회 (생성 후 확인)
+### 🔍 7. 생성 후 문서 개수 확인
+GET {{baseUrl}}/api/documents/count
+
+### 🔍 8. 모든 문서 조회 (생성 후 확인)
 GET {{baseUrl}}/api/documents
 
-### 6. 특정 문서 조회 (ID는 실제 생성된 ID로 변경하세요)
+### 📄 9. 특정 문서 조회 (ID는 실제 생성된 ID로 변경하세요)
 GET {{baseUrl}}/api/documents/f7d6510c-974b-4d96-93c3-9cdf924034be
 
-### 7. 제목으로 검색 - "Spring" 키워드
+### 🔍 10. 제목으로 검색 - "Spring" 키워드
 GET {{baseUrl}}/api/documents/search/title?title=Spring
 
-### 8. 제목으로 검색 - "Kotlin" 키워드
-GET {{baseUrl}}/api/documents/search/title?title=Kotlin
+### 🔍 11. 제목으로 검색 - "WebFlux" 키워드
+GET {{baseUrl}}/api/documents/search/title?title=WebFlux
 
-### 9. 내용으로 검색 - "Spring" 키워드
-GET {{baseUrl}}/api/documents/search/content?content=Spring
+### 🔍 12. 내용으로 검색 - "OpenSearch" 키워드
+GET {{baseUrl}}/api/documents/search/content?content=OpenSearch
 
-### 10. 내용으로 검색 - "Kotlin" 키워드
-GET {{baseUrl}}/api/documents/search/content?content=Kotlin
-
-### 11. 내용으로 검색 - "리액티브" 키워드
+### 🔍 13. 내용으로 검색 - "리액티브" 키워드
 GET {{baseUrl}}/api/documents/search/content?content=리액티브
 
-### 12. 문서 삭제 (ID는 실제 삭제할 문서의 ID로 변경하세요)
+### 🔍 14. 내용으로 검색 - "Docker" 키워드
+GET {{baseUrl}}/api/documents/search/content?content=Docker
+
+### 🎯 15. 복합 검색 (새로운 WebFlux API) - 제목과 내용 동시 검색
+GET {{baseUrl}}/api/documents/search?title=Spring&content=가이드
+
+### 🎯 16. 복합 검색 - 제목만 검색
+GET {{baseUrl}}/api/documents/search?title=Kotlin
+
+### 🎯 17. 복합 검색 - 내용만 검색
+GET {{baseUrl}}/api/documents/search?content=성능
+
+### 📊 18. 통합 검색 결과 (새로운 WebFlux API) - 검색 + 통계
+GET {{baseUrl}}/api/documents/search/combined?title=Spring
+
+### 📊 19. 통합 검색 결과 - 복합 조건
+GET {{baseUrl}}/api/documents/search/combined?title=OpenSearch&content=클러스터
+
+### 📊 20. 통합 검색 결과 - 내용만
+GET {{baseUrl}}/api/documents/search/combined?content=프로그래밍
+
+### 🗑️ 21. 특정 문서 삭제 (ID는 실제 삭제할 문서의 ID로 변경하세요)
 DELETE {{baseUrl}}/api/documents/21fa71b2-c8f4-4ae8-a2bd-06f37cc70fd3
 
-### 13. 삭제 후 전체 문서 조회 (삭제 확인)
-GET {{baseUrl}}/api/documents
+### 🔍 22. 삭제 후 문서 개수 확인
+GET {{baseUrl}}/api/documents/count
 
-### 14. 존재하지 않는 문서 조회 (404 테스트)
+### ❌ 23. 존재하지 않는 문서 조회 (404 테스트)
 GET {{baseUrl}}/api/documents/non-existing-id
 
-### 15. 추가 테스트용 문서 생성 - 검색 테스트
+### 📝 24. 추가 테스트용 문서 생성 - 검색 테스트
 POST {{baseUrl}}/api/documents
 Content-Type: {{contentType}}
 
@@ -74,21 +113,45 @@ Content-Type: {{contentType}}
   "content": "ElasticSearch와 OpenSearch의 차이점과 마이그레이션 가이드. 두 검색 엔진의 성능과 기능을 상세히 비교합니다."
 }
 
-### 16. 복합 검색 테스트 - "검색" 키워드로 제목 검색
+### 🔍 25. 복합 검색 테스트 - "검색" 키워드로 제목 검색
 GET {{baseUrl}}/api/documents/search/title?title=검색
 
-### 17. 복합 검색 테스트 - "가이드" 키워드로 내용 검색
+### 🔍 26. 복합 검색 테스트 - "가이드" 키워드로 내용 검색
 GET {{baseUrl}}/api/documents/search/content?content=가이드
 
+### 🗑️ 27. 모든 문서 삭제 (새로운 WebFlux API) - 주의: 모든 데이터 삭제
+# DELETE {{baseUrl}}/api/documents
+
+### 🔍 28. 전체 삭제 후 상태 확인
+# GET {{baseUrl}}/api/documents/count
+
+###
+### 🚀 WebFlux Reactive 기능 테스트 가이드:
+###
+### 🎯 새로 추가된 Reactive API들:
+### • /api/documents/count - 문서 개수 조회 (Mono<Long>)
+### • /api/documents/batch - 배치 문서 생성 (Flux<SampleDocument>)
+### • /api/documents/stream - 실시간 스트리밍 (Server-Sent Events)
+### • /api/documents/search - 복합 검색 (Flux<SampleDocument>)
+### • /api/documents/search/combined - 검색 + 통계 (Mono<Map>)
+### • DELETE /api/documents - 모든 문서 삭제 (Mono<Void>)
 ###
 ### 📋 사용 방법:
-### 1. IntelliJ IDEA에서 이 파일을 열어주세요
+### 1. IntelliJ IDEA나 VS Code에서 이 파일을 열어주세요
 ### 2. 각 요청 왼쪽의 ▶️ 버튼을 클릭하여 실행
 ### 3. ID가 필요한 요청들은 실제 생성된 ID로 변경 후 실행
-### 4. 순서대로 실행하면 전체 기능을 테스트할 수 있습니다
+### 4. 순서대로 실행하면 전체 WebFlux 기능을 테스트할 수 있습니다
+### 5. 스트리밍 API는 브라우저에서 직접 확인하는 것을 권장합니다
 ###
-### 💡 팁:
-### - Response를 확인하여 생성된 ID를 복사해서 사용하세요
-### - 변수를 수정하여 다른 환경에서도 테스트 가능합니다
-### - 한국어 검색도 정상적으로 작동합니다
-### 
+### 💡 WebFlux 특화 팁:
+### • Server-Sent Events는 브라우저 개발자 도구의 Network 탭에서 확인
+### • 배치 API는 여러 문서를 병렬로 처리하여 성능 향상
+### • 모든 API가 Non-blocking 방식으로 동작하여 높은 동시성 지원
+### • Reactive Streams의 backpressure로 메모리 효율성 보장
+### • 한국어 검색과 복합 조건 검색 완벽 지원
+###
+### ⚠️ 주의사항:
+### • 27번 모든 문서 삭제 API는 주석 처리되어 있습니다 (실수 방지)
+### • 스트리밍 API는 연결을 유지하므로 테스트 후 중단해주세요
+### • 대용량 배치 처리 시 메모리 사용량을 모니터링하세요
+###
