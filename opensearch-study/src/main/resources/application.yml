@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: opensearch-study
+  
+  docker:
+    compose:
+      lifecycle-management: start_only
+
+opensearch:
+  uris: http://localhost:9200
+  socket-timeout: 10s
+  connection-timeout: 5s

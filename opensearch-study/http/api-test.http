@@ -1,0 +1,94 @@
+### OpenSearch Study API 테스트
+### Spring Boot + OpenSearch 연동 API 테스트 모음
+
+### 변수 설정
+@baseUrl = http://localhost:8080
+@contentType = application/json
+
+### 1. 모든 문서 조회 (빈 상태 확인)
+GET {{baseUrl}}/api/documents
+
+### 2. 첫 번째 문서 생성 - Spring Boot와 OpenSearch 연동
+POST {{baseUrl}}/api/documents
+Content-Type: {{contentType}}
+
+{
+  "title": "Spring Boot와 OpenSearch 연동",
+  "content": "Spring Boot 애플리케이션에서 OpenSearch를 사용하는 방법에 대한 가이드입니다."
+}
+
+### 3. 두 번째 문서 생성 - Reactive Programming 가이드
+POST {{baseUrl}}/api/documents
+Content-Type: {{contentType}}
+
+{
+  "title": "Reactive Programming 가이드",
+  "content": "Spring WebFlux를 사용한 리액티브 프로그래밍의 기본 개념과 실무 적용 방법"
+}
+
+### 4. 세 번째 문서 생성 - Kotlin 프로그래밍 입문
+POST {{baseUrl}}/api/documents
+Content-Type: {{contentType}}
+
+{
+  "title": "Kotlin 프로그래밍 입문",
+  "content": "Kotlin 언어의 기본 문법과 Spring Boot와의 연동 방법을 다룹니다."
+}
+
+### 5. 모든 문서 조회 (생성 후 확인)
+GET {{baseUrl}}/api/documents
+
+### 6. 특정 문서 조회 (ID는 실제 생성된 ID로 변경하세요)
+GET {{baseUrl}}/api/documents/f7d6510c-974b-4d96-93c3-9cdf924034be
+
+### 7. 제목으로 검색 - "Spring" 키워드
+GET {{baseUrl}}/api/documents/search/title?title=Spring
+
+### 8. 제목으로 검색 - "Kotlin" 키워드
+GET {{baseUrl}}/api/documents/search/title?title=Kotlin
+
+### 9. 내용으로 검색 - "Spring" 키워드
+GET {{baseUrl}}/api/documents/search/content?content=Spring
+
+### 10. 내용으로 검색 - "Kotlin" 키워드
+GET {{baseUrl}}/api/documents/search/content?content=Kotlin
+
+### 11. 내용으로 검색 - "리액티브" 키워드
+GET {{baseUrl}}/api/documents/search/content?content=리액티브
+
+### 12. 문서 삭제 (ID는 실제 삭제할 문서의 ID로 변경하세요)
+DELETE {{baseUrl}}/api/documents/21fa71b2-c8f4-4ae8-a2bd-06f37cc70fd3
+
+### 13. 삭제 후 전체 문서 조회 (삭제 확인)
+GET {{baseUrl}}/api/documents
+
+### 14. 존재하지 않는 문서 조회 (404 테스트)
+GET {{baseUrl}}/api/documents/non-existing-id
+
+### 15. 추가 테스트용 문서 생성 - 검색 테스트
+POST {{baseUrl}}/api/documents
+Content-Type: {{contentType}}
+
+{
+  "title": "ElasticSearch vs OpenSearch 비교",
+  "content": "ElasticSearch와 OpenSearch의 차이점과 마이그레이션 가이드. 두 검색 엔진의 성능과 기능을 상세히 비교합니다."
+}
+
+### 16. 복합 검색 테스트 - "검색" 키워드로 제목 검색
+GET {{baseUrl}}/api/documents/search/title?title=검색
+
+### 17. 복합 검색 테스트 - "가이드" 키워드로 내용 검색
+GET {{baseUrl}}/api/documents/search/content?content=가이드
+
+###
+### 📋 사용 방법:
+### 1. IntelliJ IDEA에서 이 파일을 열어주세요
+### 2. 각 요청 왼쪽의 ▶️ 버튼을 클릭하여 실행
+### 3. ID가 필요한 요청들은 실제 생성된 ID로 변경 후 실행
+### 4. 순서대로 실행하면 전체 기능을 테스트할 수 있습니다
+###
+### 💡 팁:
+### - Response를 확인하여 생성된 ID를 복사해서 사용하세요
+### - 변수를 수정하여 다른 환경에서도 테스트 가능합니다
+### - 한국어 검색도 정상적으로 작동합니다
+### 
